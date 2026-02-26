@@ -52,12 +52,17 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
         sub.subscription.unsubscribe();
       };
     } else {
-      const admins = readAdmins();
-      if (admins.length === 0) {
-        writeAdmins([
-          { email: "admin@demo.id", password: "admin123" },
-          { email: "admin@kerjatim.id", password: "admin123" }
-        ]);
+      let admins = readAdmins();
+      const defaultAdmins = [
+        { email: "admin@demo.id", password: "admin123" },
+        { email: "admin@kerjatim.id", password: "admin123" }
+      ];
+
+      // Pastikan akun admin@kerjatim.id selalu ada di daftar
+      const hasNewAdmin = admins.some(a => a.email === "admin@kerjatim.id");
+      if (!hasNewAdmin) {
+        admins = [...defaultAdmins];
+        writeAdmins(admins);
       }
       const raw = localStorage.getItem(ADMIN_KEY);
       if (raw) {
