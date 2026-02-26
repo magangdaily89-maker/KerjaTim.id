@@ -54,7 +54,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       const admins = readAdmins();
       if (admins.length === 0) {
-        writeAdmins([{ email: "admin@demo.id", password: "admin123" }]);
+        writeAdmins([
+          { email: "admin@demo.id", password: "admin123" },
+          { email: "admin@kerjatim.id", password: "admin123" }
+        ]);
       }
       const raw = localStorage.getItem(ADMIN_KEY);
       if (raw) {
